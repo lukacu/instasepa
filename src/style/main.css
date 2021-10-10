@@ -1,0 +1,80 @@
+
+.scanner {
+    position: relative;
+}
+
+.scanner video {
+    width: 100%;
+}
+
+.scanner #status {
+    width: 100%;
+    color: white;
+    text-align: center;
+    font-size: 20px;
+    line-height: 60px;
+}
+
+.scanner #close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 40px;
+    line-height: 10px;
+    color: white;
+}
+
+.scanner .toolbar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;    
+    background-color: gray;
+    opacity: 0.5;
+    min-height: 60px;
+}
+
+.scanner #flash {
+    float: left;
+    padding: 10px;
+    color: white;
+    display: inline-block;
+    font-size: 40px;
+    line-height: 10px;
+}
+
+.scanner #flash .on {
+    color: yellow;
+}
+
+.scanner #sources {
+    float: left;
+    padding: 10px;
+    display: inline-block;
+    font-size: 20px;
+}
+
+.view img {
+    width: 100%;
+    
+}
+
+.view .info,
+.edit,
+.list {
+    padding-top: 20px;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.buttons {
+    padding-top: 20px;
+    text-align: right;
+}
+
+.version {
+    font-size: 50%;
+    color: gray;
+}

@@ -1,0 +1,15 @@
+<div class="list-group list">
+{{#each items }}
+  <a href="#" class="list-group-item list-group-item-action" aria-current="true" onclick="window.app.view('{{ this.uuid }}'); return false;">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="mb-1">{{ this.receiver_name }}</h5>
+      <small>{{ this.amount }} &euro;</small>
+    </div>
+    <p class="mb-1">{{ this.purpose_text }}</p>
+    <small>{{ this.due_date }}</small>
+  </a>
+{{/each}}
+
+</div>
+
+

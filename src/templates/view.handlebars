@@ -1,0 +1,29 @@
+<div class="row view">
+
+  <div class="col-md-6 justify-content-center qrcode">
+      <div class="spinner-border" role="status">
+        <span class="sr-only">Generating...</span>
+      </div>
+  </div>
+
+  <div class="col-md-6 info">
+    <p>Payer: {{ item.payer_name }}, {{ item.payer_address }}, {{ item.payer_post }}</p>
+
+    <p>Amount: {{ item.amount }} &euro; </p>
+
+    <p>{{ item.purpose_text }} ({{ item.purpose_code }}) {{#if item.urgent }}Urgent payment{{/if}}</p>
+  
+    <p>Due date: {{ item.due_date }}</p>  
+
+    <p>IBAN: {{ item.iban }}</p>  
+    <p>Reference: {{ item.reference }}</p>
+
+    <p>Receiver: {{ item.receiver_name }}, {{ item.receiver_address }}, {{ item.receiver_post }}</p>
+  </div>
+  
+  <div class="col-12 buttons">
+    <button type="submit" class="btn btn-primary" onclick="window.app.edit('{{ item.uuid }}'); return false;"><i class="bi bi-pencil-fill"></i></button>
+    <button type="submit" class="btn btn-danger" onclick="window.app.remove('{{ item.uuid }}'); return false;"><i class="bi bi-trash-fill"></i></button>
+    <button type="submit" class="btn btn-secondary" onclick="window.app.list(); return false;"><i class="bi bi-backspace-fill"></i></button>
+  </div>
+</form>

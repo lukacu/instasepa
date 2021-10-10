@@ -1,0 +1,73 @@
+<form class="row edit" onsubmit="event.preventDefault(); window.app.save(this); return false;">
+  <input type="hidden" id="uuid" value="{{ item.uuid }}">
+  <div class="col-12">
+    <label for="payer_name" class="form-label">Payer name</label>
+    <input type="text" class="form-control" id="payer_name" value="{{ item.payer_name }}">
+  </div>
+  <div class="col-md-6">
+    <label for="payer_address" class="form-label">Payer address</label>
+    <input type="text" class="form-control" id="payer_address" value="{{ item.payer_address }}">
+  </div>
+  <div class="col-md-6">
+    <label for="payer_post" class="form-label">Payer post</label>
+    <input type="text" class="form-control" id="payer_post" value="{{ item.payer_post }}">
+  </div>
+  
+  <div class="col-md-6">
+    <label for="amount" class="form-label">Amount</label>
+    <input type="text" class="form-control" id="amount" value="{{ item.amount }}">
+  </div>
+
+  <div class="col-md-6">
+    <div class="custom-control custom-switch">
+      <input class="custom-control-input" type="checkbox" role="switch" id="urgent" {{#if item.urgent }}checked{{/if}}>
+      <label class="custom-control-label" for="urgent">Urgent</label>
+    </div>
+  </div>
+
+  <div class="col-2">
+    <label for="purpose_code" class="form-label">Purpose</label>
+    <select id="purpose_code" class="custom-select">
+      <option selected>OTHR</option>
+      <option>COST</option>
+    </select>
+  </div>
+  
+  <div class="col-10">
+    <label for="purpose_text" class="form-label">Message</label>
+    <input type="text" class="form-control" id="purpose_text"  value="{{ item.purpose_text }}">
+  </div>
+  
+
+  <div class="col-md-6">
+    <label for="due_date" class="form-label">Due date</label>
+    <input type="text" class="form-control" id="due_date"  value="{{ item.due_date }}">
+  </div>  
+
+  <div class="col-md-6">
+    <label for="iban" class="form-label">Receiver IBAN</label>
+    <input type="text" class="form-control" id="iban" value="{{ item.iban }}">
+  </div>  
+
+  <div class="col-md-6">
+    <label for="reference" class="form-label">Reference</label>
+    <input type="text" class="form-control" id="reference" value="{{ item.reference }}">
+  </div>
+
+  <div class="col-12">
+    <label for="receiver_name" class="form-label">Receiver name</label>
+    <input type="text" class="form-control" id="receiver_name" value="{{ item.receiver_name }}">
+  </div>
+  <div class="col-md-6">
+    <label for="receiver_address" class="form-label">Receiver address</label>
+    <input type="text" class="form-control" id="receiver_address" value="{{ item.receiver_address }}">
+  </div>
+  <div class="col-md-6">
+    <label for="receiver_post" class="form-label">Receiver post</label>
+    <input type="text" class="form-control" id="receiver_post" value="{{ item.receiver_post }}">
+  </div>
+  <div class="col-12 buttons">
+    <button type="submit" class="btn btn-primary"><i class="bi bi-save-fill"></i></button>
+    <button type="submit" class="btn btn-secondary" onclick="window.app.list(); return false;"><i class="bi bi-backspace-fill"></i></button>
+  </div>
+</form>

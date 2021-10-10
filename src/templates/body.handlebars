@@ -1,0 +1,16 @@
+<div class="container">
+<nav class="navbar navbar-light bg-light" id="bar">
+  <a class="navbar-brand" href="#" onclick="window.app.list(); return false;">
+    <!--img src="/docs/4.6/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt=""-->
+    InstaSEPA <span class="version">{{ version }}</span>
+  </a>
+    <form class="form-inline">
+    <button type="button" class="btn btn-primary" id="action_scan" onclick="window.app.scan(); return false;"><i class="bi bi-upc-scan"></i></button>&nbsp;
+    <button type="button" class="btn btn-secondary" id="action_new" onclick="window.app.edit(); return false;"><i class="bi bi-plus-circle"></i></button>
+    </form>
+</nav>
+<div id="content"></div>
+
+</div>
+
+
