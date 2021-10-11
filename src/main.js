@@ -1,13 +1,14 @@
 const version = "0.0.1";
 
 const $ = require("jquery");
-const { v4: uuidv4 } = require('uuid');
 const { printf } = require('fast-printf');
 const IBAN = require('iban');
 
 import { Encoder, QRByte, QRKanji, ErrorCorrectionLevel } from '@nuintun/qrcode';
  
 import {encode as encode_iso88592} from 'iso-8859-2';
+ 
+import storage from './storage.js'
  
 import QrScanner from 'qr-scanner';
 QrScanner.WORKER_PATH = './worker.js'
@@ -20,13 +21,13 @@ require('bootstrap-icons/font/bootstrap-icons.css');
 require('./style/main.css')
 
 let default_item = {
-    amount: "10",
-    due_date: "15.6.2022",
-    iban: "SI56 1111 1111 3333 222",
-    payer_address: "Brodarjev trg 6",
-    payer_name: "Luka Cehovin Zajc",
-    payer_post: "1000 Ljubljana",
-    purpose_text: "Test",
+    amount: "",
+    due_date: "",
+    iban: "",
+    payer_address: "",
+    payer_name: "",
+    payer_post: "",
+    purpose_text: "",
     receiver_address: "",
     receiver_name: "",
     receiver_post: "",
@@ -52,8 +53,8 @@ function generate_upnqr(data, callback) {
         data.purpose_code || '',
         data.purpose_text || '',
         data.due_date || '',
-        (data.iban || '').replace(" ", ""),
-        (data.reference || '').replace(" ", ""),
+        (data.iban || '').replaceAll(" ", ""),
+        (data.reference || '').replaceAll(" ", ""),
         data.receiver_name || '',
         data.receiver_address || '',
         data.receiver_post || '',
@@ -111,73 +112,6 @@ function parse_upnqr(payload) {
 
 }
 
-let storage = function() {
-    let db = window.localStorage;
-
-    function list_items() {
-        return JSON.parse(db.getItem("items") || "[]");
-    };
-    
-    function get_property(key) {
-        let properties = JSON.parse(db.getItem("properties") || "{}");
-        return properties[key];
-    };
-    
-    function set_property(key, value) {
-        let properties = JSON.parse(db.getItem("properties") || "{}");
-
-        properties[key] = value;
-        
-        db.setItem("properties", JSON.stringify(properties));
-    };
-    
-    function get_item(uuid) {
-        let items = list_items();
-        let item = items.find(item => item.uuid == uuid);
-        return item;
-    };
-    
-    function set_item(data) {
-        let items = list_items();
-        if (data.uuid === undefined || data.uuid == "") data.uuid = uuidv4();
-        
-        let index = items.findIndex(item => item.uuid == data.uuid);
-        
-        if (index == -1) {
-            items.push(data);
-        } else {
-            items[index] = data;
-        }
-        
-        db.setItem("items", JSON.stringify(items));
-        
-        return index == -1;
-    };
-    
-    function remove_item(uuid) {
-        let items = list_items();
-        let index = items.findIndex(item => item.uuid == uuid);
-        
-        if (index != -1) {
-            items.splice(index, 1);
-            db.setItem("items", JSON.stringify(items));
-            return true;
-        }
-        
-        return false;
-    };
-    
-    return {
-        list_items,
-        get_item,
-        set_item,
-        remove_item,
-        get_property,
-        set_property,
-    }
-    
-    
-}();
 
 let frontend = function() {
     
@@ -221,7 +155,7 @@ let frontend = function() {
             item = data;
         } else {
             item = storage.get_item(data);
-            if (item === undefined) item = default_item;
+            if (item === undefined) item = storage.get_property("defaults") || {};
         }
         
         $("#content").html($(edit_template({item})));
@@ -253,8 +187,7 @@ let frontend = function() {
                 let data = parse_upnqr(result);
                 
                 if (data) {
-                    storage.set_item(data);
-                    list(); 
+                    save(data);
                 } 
             }
 
@@ -326,23 +259,40 @@ let frontend = function() {
 
     function save(form) {
     
-        function value(item) {
-            if ($(item).attr("type") == "checkbox") return $(item).is(":checked");
-            return $(item).val();
-        }
+        let data = form;
     
-        let properties = $(form).find("input, select").map(function (_, item) { return [[$(item).attr('id'), value(item)]]; });
+        if (form.amount === undefined) {
+    
+            function value(item) {
+                if ($(item).attr("type") == "checkbox") return $(item).is(":checked");
+                return $(item).val();
+            }
+        
+            let properties = $(form).find("input, select").map(function (_, item) { return [[$(item).attr('id'), value(item)]]; });
 
-        let data = Object.fromEntries(properties.get());
-    
-        data.iban = data.iban.replace(" ", "");
+            data = Object.fromEntries(properties.get());
+
+        }
+
+        data.iban = data.iban.replaceAll(" ", "");
     
         if (!IBAN.isValid(data.iban)) {
             edit(data);
             return;
         }
     
-        storage.set_item(data);
+        let created = storage.set_item(data);
+        
+        if (created) {
+            storage.set_property("defaults", {
+                payer_address: data.payer_address,
+                payer_name: data.payer_name,
+                payer_post: data.payer_post,
+            });
+        
+        }
+        
+
         
         list();
     };
