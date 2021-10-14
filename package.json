@@ -1,18 +1,24 @@
 {
   "name": "instasepa",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.0.2",
+  "description": "Save and generate SEPA payment forms",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lukacu/instasepa/"
+  },
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.pro.js",
     "builddev": "webpack --config webpack.dev.js",
     "servedev": "webpack serve --config webpack.dev.js"
   },
-  "author": "",
-  "license": "GPL",
+  "author": "Luka Cehovin Zajc",
   "devDependencies": {
     "bootstrap": "^4.6.0",
     "css-loader": "^5.2.0",
+    "favicons": "^6.2.2",
+    "favicons-webpack-plugin": "^5.0.2",
     "file-loader": "^6.2.0",
     "handlebars": "^4.7.7",
     "handlebars-loader": "^1.7.1",

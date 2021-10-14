@@ -120,6 +120,7 @@ let frontend = function() {
     var edit_template = require("./templates/edit.handlebars");
     var view_template = require("./templates/view.handlebars");
     var scan_template = require("./templates/scan.handlebars");
+    var welcome_template = require("./templates/welcome.handlebars");
     var scanner = null;
         
     function initialize() {
@@ -139,7 +140,8 @@ let frontend = function() {
         stop_scanner();
 
         let items = storage.list_items();
-        let content = $(list_template({items}));
+        
+        let content = (items.length == 0) ? $(welcome_template({})) : $(list_template({items}));
 
         $("#content").html(content);
         
@@ -261,7 +263,7 @@ let frontend = function() {
     
         let data = form;
     
-        if (form.amount === undefined) {
+        if (form.amount instanceof HTMLElement) {
     
             function value(item) {
                 if ($(item).attr("type") == "checkbox") return $(item).is(":checked");

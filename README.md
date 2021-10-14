@@ -6,6 +6,8 @@ then a code can be recreated at any time. At the moment the app supports UPNQR s
 The app is actually a single page webpage with support for PWA, so it can be added to your mobile phone or desktop. For me it was a practice project to 
 explore modern JavaScript and NPM ecosystem. As such it uses only simple libraries (no React, etc.).
 
+The app is officially deployed at [sepa.iqu.si](https://sepa.iqu.si), all information is stored on your local device.
+
 ## Using
 
 TODO

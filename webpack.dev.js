@@ -2,6 +2,8 @@ const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+
 module.exports = {
     mode: "development",
     devtool: "source-map",
@@ -27,6 +29,7 @@ module.exports = {
           title: 'InstaSEPA',
           chunks: ['app'],
         }),
+        new FaviconsWebpackPlugin("src/assets/icon.png"),
       ],
     module:{
         rules: [

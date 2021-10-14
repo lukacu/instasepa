@@ -2,7 +2,8 @@ const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
- 
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+
 module.exports = {
     mode: "production",
     entry: {
@@ -23,6 +24,7 @@ module.exports = {
             title: 'InstaSEPA',
             chunks: ['app'],
         }),
+        new FaviconsWebpackPlugin("src/assets/icon.png"),
         new WebpackPwaManifest({
             name: 'InstaSEPA',
             short_name: 'InstaSEPA',
